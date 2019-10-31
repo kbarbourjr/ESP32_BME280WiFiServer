@@ -1,4 +1,3 @@
-
 /*
  WiFi Web Server LED Blink
 
@@ -16,7 +15,7 @@
 
  Circuit:
  * WiFi shield attached
- * LED attached to pin 5 and is number 10
+ * LED attached to pin 5
 
  created for arduino 25 Nov 2012
  by Tom Igoe
@@ -27,17 +26,6 @@ ported for sparkfun esp32
  */
 
 #include <WiFi.h>
-#include <SPI.h>
-#include <Adafruit_BME280.h>
-#include <Adafruit_Sensor.h>
-
-#define BME_SCK 18
-#define BME_MISO 19
-#define BME_MOSI 23
-#define BME_CS 5*/
-#define SEALEVELPRESSURE_HPA (1013.25)
-
-Adafruit_BME280 bme; //IC2
 
 // const char* ssid     = "yourssid";
 // onst char* password = "yourpasswd";
@@ -51,11 +39,6 @@ WiFiServer server(80);
 void setup()
 {
     Serial.begin(115200);
-    if(!bme.begin(0x76))  {
-    Serial.println("Could not find valid BME280 sensor, check wiring");
-       
-    }
-    
     pinMode(5, OUTPUT);      // set the LED pin mode
 
     delay(10);
@@ -106,9 +89,7 @@ void loop(){
             client.println("Content-type:text/html");
             client.println();
 
-            // the content of the HTTP response follows the header  
-            client.println("<p> Kens Weather Station</p> ");     
-            client.println("<br>");
+            // the content of the HTTP response follows the header:
             client.print("Click <a href=\"/H\">here</a> to turn the LED on pin 5 on.<br>");
             client.print("Click <a href=\"/L\">here</a> to turn the LED on pin 5 off.<br>");
 
